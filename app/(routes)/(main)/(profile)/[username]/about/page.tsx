@@ -10,18 +10,18 @@ import ProfileHeader from '@/components/profile-header';
 
 type Props = {
   params: Promise<{ username: string }>;
-}
-
+};
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const resolvedParams = await params; 
+  const { username } = await params; // Await the params promise.
+
   const profile = await db.profile.findUnique({
     where: {
-      username: resolvedParams.username
-    }
+      username: username,
+    },
   });
 
   if (!profile) {
@@ -35,33 +35,34 @@ export async function generateMetadata(
   return {
     title:
       typeof user.firstName === 'string'
-        ? user.firstName + ' ' + user.lastName + ' | Photorio'
-        : previousTitle
+        ? `${user.firstName} ${user.lastName} | Bribbble`
+        : previousTitle,
   };
 }
-
 export default async function AboutPage({
-  params
+  params,
 }: {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }) {
+  const { username } = await params; // Await the params promise.
+
   let user: User;
 
-  // get logged in user
+  // Get logged-in user
   const loggedInUser = await currentUser();
 
-  // get user profile of the username
+  // Get user profile of the username
   const profile = await db.profile.findUnique({
     where: {
-      username: params.username
-    }
+      username: username,
+    },
   });
 
   if (!profile) {
     notFound();
   }
 
-  // check logged in user is the owner of the profile page
+  // Check if logged-in user is the owner of the profile page
   if (loggedInUser && loggedInUser.id === profile.userId) {
     user = loggedInUser;
   } else {
@@ -72,26 +73,26 @@ export default async function AboutPage({
     notFound();
   }
 
-  // get user profile's works
+  // Get user's works
   const [works, totalWorks] = await db.$transaction([
     db.work.findMany({
       take: 12,
       where: {
-        userId: user.id
+        userId: user.id,
       },
       orderBy: {
-        createdAt: 'desc'
-      }
+        createdAt: 'desc',
+      },
     }),
     db.work.count({
       where: {
-        userId: user.id
-      }
-    })
+        userId: user.id,
+      },
+    }),
   ]);
 
   return (
-    <section className='flex flex-col justify-start items-center lg:px-20 py-6 px-5'>
+    <section className="flex flex-col justify-start items-center lg:px-20 py-6 px-5">
       <ProfileHeader
         user={user}
         profile={profile}
@@ -100,9 +101,9 @@ export default async function AboutPage({
           loggedInUser && loggedInUser.id === profile.userId ? true : false
         }
       />
-      <ProfileNav username={profile.username} activeNav='about' />
+      <ProfileNav username={profile.username} activeNav="about" />
 
-      <div className='w-full py-12 flex flex-col items-center justify-center'>
+      <div className="w-full py-12 flex flex-col items-center justify-center">
         <ProfileAbout user={user} profile={profile} />
       </div>
     </section>
