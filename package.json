@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.27.2",
-    "@edgestore/react": "^0.1.4",
-    "@edgestore/server": "^0.1.4",
+    "@edgestore/react": "^0.1.7",
+    "@edgestore/server": "^0.1.7",
     "@hookform/resolvers": "^3.3.2",
     "@prisma/client": "^5.7.0",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -42,7 +42,7 @@
     "tailwindcss-animate": "^1.0.7",
     "use-overflow": "^1.2.0",
     "validator": "^13.11.0",
-    "zod": "^3.22.4",
+    "zod": "^3.24.1",
     "zustand": "^4.4.7"
   },
   "devDependencies": {
