@@ -13,7 +13,7 @@ export async function generateMetadata(
   { searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const { search, category } = searchParams;
+  const { search, category } = await searchParams;
 
   const previousTitle = (await parent).title || '';
 

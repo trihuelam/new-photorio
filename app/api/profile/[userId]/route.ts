@@ -8,6 +8,8 @@ export async function GET(
   { params }: { params: { userId: string } }
 ) {
   try {
+    const { userId } = params;
+
     const user = await clerkClient.users.getUser(params.userId);
 
     if (!user) {

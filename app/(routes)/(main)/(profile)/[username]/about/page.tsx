@@ -9,16 +9,18 @@ import ProfileAbout from '@/components/profile-about';
 import ProfileHeader from '@/components/profile-header';
 
 type Props = {
-  params: { username: string };
-};
+  params: Promise<{ username: string }>;
+}
+
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
+  const resolvedParams = await params; 
   const profile = await db.profile.findUnique({
     where: {
-      username: params.username
+      username: resolvedParams.username
     }
   });
 
