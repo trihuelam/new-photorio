@@ -21,7 +21,7 @@ export default function DisclaimerModal() {
 
   return (
     <Modal
-      title='This is NOT REAL Dribbble'
+      title='This is JUST A MOCKUP WEBSITE'
       description='This site is not the real Dribbble. I created this site for educational purposes only 
       and I do not own any images used on this site. Under no circumstance shall I have any liability 
       to you for any loss or damage of any kind incurred as a result of the use of the site or reliance 

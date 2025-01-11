@@ -10,7 +10,7 @@ export default async function EditPage({
 }: {
   params: { workId: string };
 }) {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId) {
     notFound();
@@ -24,7 +24,7 @@ export default async function EditPage({
 
   const work = await db.work.findUnique({
     where: {
-      id: params.workId,
+      id: await params.workId,
       userId
     }
   });
